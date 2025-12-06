@@ -1,6 +1,6 @@
 # progect-x
 aura progetto
-# 🍽️ Menu Dinamico per Hotel 🏨
+# 🍽️ Menu per Hotel 🏨
 
 Benvenuti nel progetto del **Menu Dinamico** per un hotel! Un sito web che mostra il menu dell'hotel, suddiviso in **Pranzo** 🍴 e **Cena** 🌙, che si aggiorna automaticamente in base all'ora del giorno. Il menu è personalizzato e cambia ogni volta che arriva un nuovo orario, mostrando pietanze fresche per ogni sezione.
 
