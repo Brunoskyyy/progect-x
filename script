@@ -1,0 +1,75 @@
+let lingua = 'it';
+
+function getFasciaOraria() {
+const ora = new Date().getHours();
+if (ora >= 11 && ora < 14) return 'pranzo';
+if (ora >= 18 && ora < 23) return 'cena';
+return null;
+}
+
+function scegliCasuale(array) {
+return array[Math.floor(Math.random() * array.length)];
+}
+
+function scegliTreCasuali(array) {
+return [...array].sort(() => 0.5 - Math.random()).slice(0, 3);
+}
+
+function creaSezione(container, titolo, piatti) {
+const div = document.createElement('div');
+div.className = 'categoria';
+
+const h2 = document.createElement('h2');
+h2.textContent = titolo;
+div.appendChild(h2);
+
+piatti.forEach(p => {
+const el = document.createElement('p');
+el.className = 'piatto';
+el.textContent = p;
+div.appendChild(el);
+});
+
+container.appendChild(div);
+}
+
+function caricaMenu() {
+fetch('menu.json')
+.then(r => r.json())
+.then(data => {
+const menu = document.getElementById('menu');
+menu.innerHTML = "";
+
+const fascia = getFasciaOraria();
+if (!fascia) {
+menu.innerHTML = `<p class="messaggio">${data.testi[lingua].chiuso}</p>`;
+return;
+}
+
+const h1 = document.createElement('h1');
+h1.textContent = data.testi[lingua][fascia];
+menu.appendChild(h1);
+
+// PRIMI
+creaSezione(menu, data.testi[lingua].primi,
+scegliTreCasuali(data.primi).map(p => p[lingua])
+);
+
+// SECONDI (carne + pesce + veg)
+creaSezione(menu, data.testi[lingua].secondi, [
+scegliCasuale(data.secondi.carne)[lingua],
+scegliCasuale(data.secondi.pesce)[lingua],
+scegliCasuale(data.secondi.veg)[lingua]
+]);
+
+// DESSERT
+creaSezione(menu, data.testi[lingua].dessert,
+scegliTreCasuali(data.dessert).map(p => p[lingua])
+);
+
+// MENU BABY
+creaSezione(menu, data.testi[lingua].baby,
+data.menuBaby.map(p => p[lingua])
+);
+});
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Hotel Menu</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="language">
+<h2>Select language</h2>
+<img src="flags/it.png" onclick="setLanguage('it')">
+<img src="flags/en.png" onclick="setLanguage('en')">
+<img src="flags/de.png" onclick="setLanguage('de')">
+<img src="flags/es.png" onclick="setLanguage('es')">
+</div>
+
+<div id="menu" class="hidden"></div>
+
+<script src="script.js"></script>
+</body>
+</html>
