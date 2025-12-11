@@ -1,0 +1,334 @@
+{
+  "Pranzo": {
+    "Antipasto": [
+      {
+        "nome": "Bruschetta Classica",
+        "descrizione": "Pane tostato con pomodoro fresco, basilico, aglio e olio extravergine d'oliva",
+        "prezzo": 5.50
+      },
+      {
+        "nome": "Prosciutto e Melone",
+        "descrizione": "Prosciutto crudo di Parma DOP con melone cantalupo maturo",
+        "prezzo": 7.00
+      },
+      {
+        "nome": "Caprese",
+        "descrizione": "Mozzarella di bufala, pomodori San Marzano, basilico fresco",
+        "prezzo": 6.50
+      },
+      {
+        "nome": "Tartare di Salmone",
+        "descrizione": "Salmone crudo tritato con avocado, lime e erba cipollina",
+        "prezzo": 8.00
+      },
+      {
+        "nome": "Verdure Grigliate",
+        "descrizione": "Misto di verdure di stagione alla griglia con riduzione di aceto balsamico",
+        "prezzo": 5.00
+      },
+      {
+        "nome": "Carpaccio di Manzo",
+        "descrizione": "Fettine sottili di manzo con rucola, scaglie di parmigiano e limone",
+        "prezzo": 7.50
+      }
+    ],
+    "Primo": [
+      {
+        "nome": "Spaghetti alla Carbonara",
+        "descrizione": "Spaghetti con uova, guanciale croccante, pecorino romano e pepe nero",
+        "prezzo": 10.00
+      },
+      {
+        "nome": "Risotto ai Funghi",
+        "descrizione": "Risotto cremoso con funghi porcini freschi e prezzemolo",
+        "prezzo": 11.50
+      },
+      {
+        "nome": "Lasagna Tradizionale",
+        "descrizione": "Pasta fresca a strati con ragù di carne, besciamella e parmigiano",
+        "prezzo": 12.00
+      },
+      {
+        "nome": "Penne all'Arrabbiata",
+        "descrizione": "Penne con salsa di pomodoro piccante, aglio e peperoncino fresco",
+        "prezzo": 9.00
+      },
+      {
+        "nome": "Gnocchi al Pesto",
+        "descrizione": "Gnocchi di patate con pesto alla genovese fatto in casa",
+        "prezzo": 10.50
+      },
+      {
+        "nome": "Minestrone della Casa",
+        "descrizione": "Zuppa di verdure di stagione con legumi e pasta",
+        "prezzo": 8.50
+      }
+    ],
+    "Secondi": {
+      "Carne": [
+        {
+          "nome": "Tagliata di Manzo",
+          "descrizione": "Fettine di manzo alla griglia con rucola, scaglie di parmigiano e aceto balsamico",
+          "prezzo": 16.00
+        },
+        {
+          "nome": "Pollo alla Cacciatora",
+          "descrizione": "Pollo cotto con pomodoro, olive nere, capperi e vino bianco",
+          "prezzo": 14.50
+        },
+        {
+          "nome": "Cotoletta alla Milanese",
+          "descrizione": "Cotoletta di vitello impanata e fritta, servita con insalata",
+          "prezzo": 15.00
+        },
+        {
+          "nome": "Maiale alla Griglia",
+          "descrizione": "Lombo di maiale alla griglia con salsa alle mele e patate al forno",
+          "prezzo": 15.50
+        }
+      ],
+      "Pesce": [
+        {
+          "nome": "Branzino al Forno",
+          "descrizione": "Branzino intero al forno con patate, pomodorini e rosmarino",
+          "prezzo": 18.00
+        },
+        {
+          "nome": "Gamberi alla Griglia",
+          "descrizione": "Gamberi freschi alla griglia con aglio, prezzemolo e limone",
+          "prezzo": 17.50
+        },
+        {
+          "nome": "Salmone in Crosta",
+          "descrizione": "Filetto di salmone in crosta di erbe con salsa allo zafferano",
+          "prezzo": 16.50
+        },
+        {
+          "nome": "Fritto Misto di Mare",
+          "descrizione": "Misto di pesce e frutti di mare fritti in pastella leggera",
+          "prezzo": 17.00
+        }
+      ],
+      "Vegano": [
+        {
+          "nome": "Hamburger di Ceci",
+          "descrizione": "Hamburger vegetale di ceci con insalata, pomodoro e salsa tahini",
+          "prezzo": 13.00
+        },
+        {
+          "nome": "Ratatouille",
+          "descrizione": "Verdure di stagione stufate con erbe di Provenza e pomodoro",
+          "prezzo": 12.50
+        },
+        {
+          "nome": "Polpette di Lenticchie",
+          "descrizione": "Polpette di lenticchie con salsa di pomodoro e purea di patate",
+          "prezzo": 12.00
+        },
+        {
+          "nome": "Tofu alla Griglia",
+          "descrizione": "Tofu marinato alla griglia con verdure saltate e salsa teriyaki",
+          "prezzo": 13.50
+        }
+      ]
+    },
+    "Dolce": [
+      {
+        "nome": "Tiramisù Classico",
+        "descrizione": "Il dolce italiano per eccellenza con mascarpone, caffè e cacao",
+        "prezzo": 6.00
+      },
+      {
+        "nome": "Panna Cotta ai Frutti di Bosco",
+        "descrizione": "Panna cotta cremosa con salsa di frutti di bosco freschi",
+        "prezzo": 5.50
+      },
+      {
+        "nome": "Torta della Nonna",
+        "descrizione": "Torta di pasta frolla con crema pasticcera e pinoli",
+        "prezzo": 5.00
+      },
+      {
+        "nome": "Gelato Artigianale",
+        "descrizione": "Tris di gelato artigianale ai gusti a scelta",
+        "prezzo": 4.50
+      },
+      {
+        "nome": "Cheesecake alle Fragole",
+        "descrizione": "Cheesecake con base di biscotti e topping di fragole fresche",
+        "prezzo": 6.50
+      },
+      {
+        "nome": "Profiteroles al Cioccolato",
+        "descrizione": "Bignè ripieni di crema chantilly con salsa al cioccolato caldo",
+        "prezzo": 7.00
+      }
+    ]
+  },
+  "Cena": {
+    "Antipasto": [
+      {
+        "nome": "Carpaccio di Salmone",
+        "descrizione": "Salmone affettato sottile con avocado, lime e olio d'oliva",
+        "prezzo": 9.00
+      },
+      {
+        "nome": "Burrata con Pesto",
+        "descrizione": "Burrata cremosa con pesto di basilico, pomodorini e pinoli tostati",
+        "prezzo": 8.50
+      },
+      {
+        "nome": "Capesante alla Griglia",
+        "descrizione": "Capesante fresche alla griglia con riduzione di aceto balsamico",
+        "prezzo": 10.00
+      },
+      {
+        "nome": "Antipasto Misto",
+        "descrizione": "Selezione di salumi, formaggi e verdure sott'olio",
+        "prezzo": 11.50
+      },
+      {
+        "nome": "Gamberi in Salsa Cocktail",
+        "descrizione": "Gamberi con salsa cocktail fatta in casa e avocado",
+        "prezzo": 9.50
+      },
+      {
+        "nome": "Carpaccio di Polpo",
+        "descrizione": "Polpo affettato sottile con patate, prezzemolo e olio al limone",
+        "prezzo": 8.00
+      }
+    ],
+    "Primo": [
+      {
+        "nome": "Risotto allo Zafferano",
+        "descrizione": "Risotto allo zafferano con midollo di bue e grana padano",
+        "prezzo": 13.00
+      },
+      {
+        "nome": "Tagliatelle al Tartufo",
+        "descrizione": "Tagliatelle fresche con salsa al tartufo nero e funghi",
+        "prezzo": 14.50
+      },
+      {
+        "nome": "Ravioli di Ricotta e Spinaci",
+        "descrizione": "Ravioli ripieni di ricotta e spinaci con burro e salvia",
+        "prezzo": 12.50
+      },
+      {
+        "nome": "Gnocchi di Zucca",
+        "descrizione": "Gnocchi di zucca con burro fuso, salvia e noci tostate",
+        "prezzo": 12.00
+      },
+      {
+        "nome": "Spaghetti alle Vongole",
+        "descrizione": "Spaghetti con vongole veraci, aglio, prezzemolo e vino bianco",
+        "prezzo": 14.00
+      },
+      {
+        "nome": "Pappardelle al Cinghiale",
+        "descrizione": "Pappardelle con ragù di cinghiale e funghi selvatici",
+        "prezzo": 15.50
+      }
+    ],
+    "Secondi": {
+      "Carne": [
+        {
+          "nome": "Filetto al Pepe Verde",
+          "descrizione": "Filetto di manzo con salsa al pepe verde, purè di patate e asparagi",
+          "prezzo": 22.00
+        },
+        {
+          "nome": "Anatra all'Arancia",
+          "descrizione": "Anatra croccante con salsa all'arancia, purè di patate dolci",
+          "prezzo": 21.50
+        },
+        {
+          "nome": "Ossobuco alla Milanese",
+          "descrizione": "Ossobuco di vitello stufato con gremolata e risotto allo zafferano",
+          "prezzo": 24.00
+        },
+        {
+          "nome": "Bistecca Fiorentina",
+          "descrizione": "Bistecca di Chianina alla griglia con spinaci e fagioli cannellini",
+          "prezzo": 26.50
+        }
+      ],
+      "Pesce": [
+        {
+          "nome": "Astice alla Catalana",
+          "descrizione": "Astice con pomodori, cipolla rossa, olive e salsa al limone",
+          "prezzo": 30.00
+        },
+        {
+          "nome": "Orata al Sale",
+          "descrizione": "Orata intera cotta sotto crosta di sale marino con verdure al vapore",
+          "prezzo": 22.50
+        },
+        {
+          "nome": "Cernia al Cartoccio",
+          "descrizione": "Filetto di cernia cotto al cartoccio con pomodorini e patate",
+          "prezzo": 24.00
+        },
+        {
+          "nome": "Fritto Misto di Pesce",
+          "descrizione": "Misto di pesce e frutti di mare fritti con contorno di verdure",
+          "prezzo": 23.50
+        }
+      ],
+      "Vegano": [
+        {
+          "nome": "Curry di Ceci",
+          "descrizione": "Ceci in salsa di curry cocco con riso basmati",
+          "prezzo": 14.00
+        },
+        {
+          "nome": "Melanzane alla Parmigiana Vegana",
+          "descrizione": "Melanzane grigliate con pomodoro e 'mozzarella' di anacardi",
+          "prezzo": 13.50
+        },
+        {
+          "nome": "Quinoa con Verdure",
+          "descrizione": "Quinoa con verdure di stagione grigliate e salsa tahini",
+          "prezzo": 13.00
+        },
+        {
+          "nome": "Stufato di Lenticchie",
+          "descrizione": "Lenticchie e funghi porcini stufati con polenta cremosa",
+          "prezzo": 14.50
+        }
+      ]
+    },
+    "Dolce": [
+      {
+        "nome": "Soufflé al Cioccolato",
+        "descrizione": "Soufflé caldo al cioccolato fondente con cuore liquido e gelato",
+        "prezzo": 8.00
+      },
+      {
+        "nome": "Creme Brûlée",
+        "descrizione": "Crema alla vaniglia con croccante crosta di zucchero caramellato",
+        "prezzo": 7.00
+      },
+      {
+        "nome": "Torta Sacher",
+        "descrizione": "Torta al cioccolato con marmellata di albicocche e glassa",
+        "prezzo": 7.50
+      },
+      {
+        "nome": "Selezione di Formaggi",
+        "descrizione": "Assortimento di formaggi italiani con miele, noci e confetture",
+        "prezzo": 10.00
+      },
+      {
+        "nome": "Millefoglie alle Fragole",
+        "descrizione": "Pasta sfoglia croccante con crema chantilly e fragole fresche",
+        "prezzo": 8.50
+      },
+      {
+        "nome": "Semifreddo al Torroncino",
+        "descrizione": "Semifreddo alle mandorle con salsa al caramello salato",
+        "prezzo": 7.00
+      }
+    ]
+  }
+}

@@ -1,0 +1,517 @@
+// Hotel Menu Dynamic System
+class HotelMenuSystem {
+    constructor() {
+        this.currentLang = 'it';
+        this.currentMenuType = 'pranzo';
+        this.menuData = null;
+        this.currentTime = new Date();
+        this.translations = null;
+        this.timeCheckInterval = null;
+        this.isRestaurantOpen = true;
+        
+        this.init();
+    }
+    
+    async init() {
+        // Carica le traduzioni
+        await this.loadTranslations();
+        
+        // Imposta event listeners
+        this.setupEventListeners();
+        
+        // Imposta la lingua iniziale
+        this.setLanguage(this.currentLang);
+        
+        // Inizializza il selettore lingua
+        this.initLanguageSelector();
+        
+        // Inizia il controllo dell'orario
+        this.startTimeChecking();
+        
+        // Mostra la schermata di benvenuto
+        this.showWelcomeScreen();
+    }
+    
+    async loadTranslations() {
+        try {
+            const response = await fetch('translations.json');
+            if (!response.ok) throw new Error('Network response was not ok');
+            this.translations = await response.json();
+        } catch (error) {
+            console.error('Errore nel caricamento delle traduzioni:', error);
+            // Fallback alle traduzioni integrate
+            this.translations = this.getFallbackTranslations();
+        }
+    }
+    
+    getFallbackTranslations() {
+        return {
+            it: {
+                welcomeTitle: "Benvenuti all'Hotel Bella Vista",
+                welcomeSubtitle: "Seleziona la tua lingua preferita",
+                enterText: "Entra nel Ristorante",
+                hotelName: "Hotel Bella Vista",
+                hotelTagline: "Ristorante & Lounge",
+                infoTitle: "Informazioni Menù",
+                infoText: "Il nostro menù si aggiorna automaticamente in base all'orario. Ogni piatto viene selezionato casualmente dalla nostra collezione per garantire varietà e freschezza.",
+                refreshTitle: "Aggiornamento Automatico",
+                refreshText: "Il menù cambia automaticamente alle 12:00 per il pranzo e alle 19:00 per la cena. I piatti vengono selezionati casualmente ad ogni cambio.",
+                appetizerTitle: "Antipasto",
+                firstCourseTitle: "Primo",
+                secondCourseTitle: "Secondo",
+                meatTitle: "Carne",
+                fishTitle: "Pesce",
+                veganTitle: "Vegano",
+                dessertTitle: "Dolce",
+                footerText: "© 2023 Hotel Bella Vista. Tutti i prezzi sono in Euro (€). Il menù si aggiorna automaticamente in base all'orario.",
+                contactLink: "Contatti",
+                aboutLink: "Chi Siamo",
+                policyLink: "Privacy Policy",
+                refreshBtnText: "Simula Cambio Orario",
+                loadingText: "Caricamento menù...",
+                menuLunch: "Menù Pranzo",
+                menuDinner: "Menù Cena",
+                closedMessage: "Ristorante Chiuso",
+                closedInfo: "Il ristorante è attualmente chiuso. Orari di apertura: Pranzo 12:00-15:00, Cena 19:00-22:00"
+            },
+            en: {
+                welcomeTitle: "Welcome to Hotel Bella Vista",
+                welcomeSubtitle: "Select your preferred language",
+                enterText: "Enter Restaurant",
+                hotelName: "Hotel Bella Vista",
+                hotelTagline: "Restaurant & Lounge",
+                infoTitle: "Menu Information",
+                infoText: "Our menu updates automatically based on the time of day. Each dish is randomly selected from our collection to ensure variety and freshness.",
+                refreshTitle: "Automatic Update",
+                refreshText: "The menu changes automatically at 12:00 for lunch and 19:00 for dinner. Dishes are randomly selected each time.",
+                appetizerTitle: "Appetizer",
+                firstCourseTitle: "First Course",
+                secondCourseTitle: "Second Course",
+                meatTitle: "Meat",
+                fishTitle: "Fish",
+                veganTitle: "Vegan",
+                dessertTitle: "Dessert",
+                footerText: "© 2023 Hotel Bella Vista. All prices are in Euros (€). The menu updates automatically based on time.",
+                contactLink: "Contact",
+                aboutLink: "About Us",
+                policyLink: "Privacy Policy",
+                refreshBtnText: "Simulate Time Change",
+                loadingText: "Loading menu...",
+                menuLunch: "Lunch Menu",
+                menuDinner: "Dinner Menu",
+                closedMessage: "Restaurant Closed",
+                closedInfo: "The restaurant is currently closed. Opening hours: Lunch 12:00-15:00, Dinner 19:00-22:00"
+            },
+            de: {
+                welcomeTitle: "Willkommen im Hotel Bella Vista",
+                welcomeSubtitle: "Wählen Sie Ihre bevorzugte Sprache",
+                enterText: "Restaurant betreten",
+                hotelName: "Hotel Bella Vista",
+                hotelTagline: "Restaurant & Lounge",
+                infoTitle: "Menüinformationen",
+                infoText: "Unser Menü aktualisiert sich automatisch basierend auf der Tageszeit. Jedes Gericht wird zufällig aus unserer Kollektion ausgewählt, um Vielfalt und Frische zu gewährleisten.",
+                refreshTitle: "Automatische Aktualisierung",
+                refreshText: "Das Menü wechselt automatisch um 12:00 Uhr zum Mittagessen und um 19:00 Uhr zum Abendessen. Die Gerichte werden bei jedem Wechsel zufällig ausgewählt.",
+                appetizerTitle: "Vorspeise",
+                firstCourseTitle: "Erster Gang",
+                secondCourseTitle: "Zweiter Gang",
+                meatTitle: "Fleisch",
+                fishTitle: "Fisch",
+                veganTitle: "Vegan",
+                dessertTitle: "Dessert",
+                footerText: "© 2023 Hotel Bella Vista. Alle Preise sind in Euro (€). Das Menü aktualisiert sich automatisch basierend auf der Uhrzeit.",
+                contactLink: "Kontakt",
+                aboutLink: "Über uns",
+                policyLink: "Datenschutzrichtlinie",
+                refreshBtnText: "Zeitwechsel simulieren",
+                loadingText: "Menü wird geladen...",
+                menuLunch: "Mittagsmenü",
+                menuDinner: "Abendmenü",
+                closedMessage: "Restaurant Geschlossen",
+                closedInfo: "Das Restaurant ist derzeit geschlossen. Öffnungszeiten: Mittagessen 12:00-15:00, Abendessen 19:00-22:00"
+            },
+            es: {
+                welcomeTitle: "Bienvenidos al Hotel Bella Vista",
+                welcomeSubtitle: "Seleccione su idioma preferido",
+                enterText: "Entrar al Restaurante",
+                hotelName: "Hotel Bella Vista",
+                hotelTagline: "Restaurante & Lounge",
+                infoTitle: "Información del Menú",
+                infoText: "Nuestro menú se actualiza automáticamente según la hora del día. Cada plato se selecciona aleatoriamente de nuestra colección para garantizar variedad y frescura.",
+                refreshTitle: "Actualización Automática",
+                refreshText: "El menú cambia automáticamente a las 12:00 para el almuerzo y a las 19:00 para la cena. Los platos se seleccionan aleatoriamente en cada cambio.",
+                appetizerTitle: "Entrante",
+                firstCourseTitle: "Primer Plato",
+                secondCourseTitle: "Segundo Plato",
+                meatTitle: "Carne",
+                fishTitle: "Pescado",
+                veganTitle: "Vegano",
+                dessertTitle: "Postre",
+                footerText: "© 2023 Hotel Bella Vista. Todos los precios son en Euros (€). El menú se actualiza automáticamente según la hora.",
+                contactLink: "Contacto",
+                aboutLink: "Sobre Nosotros",
+                policyLink: "Política de Privacidad",
+                refreshBtnText: "Simular Cambio de Hora",
+                loadingText: "Cargando menú...",
+                menuLunch: "Menú de Almuerzo",
+                menuDinner: "Menú de Cena",
+                closedMessage: "Restaurante Cerrado",
+                closedInfo: "El restaurante está actualmente cerrado. Horario de apertura: Almuerzo 12:00-15:00, Cena 19:00-22:00"
+            }
+        };
+    }
+    
+    async loadMenuData() {
+        try {
+            const response = await fetch('menu.json');
+            if (!response.ok) throw new Error('Network response was not ok');
+            this.menuData = await response.json();
+            
+            // Verifica che il ristorante sia aperto
+            this.checkRestaurantStatus();
+            
+            if (this.isRestaurantOpen) {
+                // Determina il tipo di menù in base all'orario
+                this.determineMenuType();
+                
+                // Genera il menù
+                this.generateMenu();
+            } else {
+                // Mostra messaggio di chiusura
+                this.showClosedMessage();
+            }
+            
+            // Nascondi il loading
+            this.hideLoading();
+            
+        } catch (error) {
+            console.error('Errore nel caricamento del menù:', error);
+            this.showError();
+        }
+    }
+    
+    checkRestaurantStatus() {
+        const currentHour = this.currentTime.getHours();
+        const currentMinute = this.currentTime.getMinutes();
+        const currentTimeInMinutes = currentHour * 60 + currentMinute;
+        
+        // Orari di apertura in minuti
+        const lunchStart = 12 * 60; // 12:00
+        const lunchEnd = 15 * 60;   // 15:00
+        const dinnerStart = 19 * 60; // 19:00
+        const dinnerEnd = 22 * 60;   // 22:00
+        
+        // Controlla se siamo negli orari di apertura
+        this.isRestaurantOpen = 
+            (currentTimeInMinutes >= lunchStart && currentTimeInMinutes <= lunchEnd) ||
+            (currentTimeInMinutes >= dinnerStart && currentTimeInMinutes <= dinnerEnd);
+    }
+    
+    determineMenuType() {
+        const currentHour = this.currentTime.getHours();
+        const currentMinute = this.currentTime.getMinutes();
+        const currentTimeInMinutes = currentHour * 60 + currentMinute;
+        
+        // Orari in minuti
+        const lunchStart = 12 * 60; // 12:00
+        const lunchEnd = 15 * 60;   // 15:00
+        const dinnerStart = 19 * 60; // 19:00
+        const dinnerEnd = 22 * 60;   // 22:00
+        
+        if (currentTimeInMinutes >= lunchStart && currentTimeInMinutes <= lunchEnd) {
+            this.currentMenuType = 'pranzo';
+        } else if (currentTimeInMinutes >= dinnerStart && currentTimeInMinutes <= dinnerEnd) {
+            this.currentMenuType = 'cena';
+        } else {
+            // Fuori orario, mostra il menù più vicino
+            if (currentTimeInMinutes < lunchStart) {
+                this.currentMenuType = 'pranzo'; // Prima di pranzo
+            } else if (currentTimeInMinutes > lunchEnd && currentTimeInMinutes < dinnerStart) {
+                this.currentMenuType = 'cena'; // Pomeriggio
+            } else {
+                this.currentMenuType = 'pranzo'; // Dopo cena, mostra pranzo per il giorno dopo
+            }
+        }
+        
+        this.updateMenuTypeDisplay();
+    }
+    
+    updateMenuTypeDisplay() {
+        const menuTypeText = document.getElementById('menu-type-text');
+        const menuTypeIcon = document.getElementById('menu-type-icon');
+        
+        if (this.currentMenuType === 'pranzo') {
+            menuTypeText.textContent = this.translations[this.currentLang].menuLunch;
+            menuTypeIcon.className = 'fas fa-sun';
+            menuTypeIcon.parentElement.style.backgroundColor = '#27ae60';
+        } else {
+            menuTypeText.textContent = this.translations[this.currentLang].menuDinner;
+            menuTypeIcon.className = 'fas fa-moon';
+            menuTypeIcon.parentElement.style.backgroundColor = '#2c3e50';
+        }
+    }
+    
+    generateMenu() {
+        if (!this.menuData) return;
+        
+        const menuKey = this.currentMenuType === 'pranzo' ? 'Pranzo' : 'Cena';
+        const menu = this.menuData[menuKey];
+        
+        if (!menu) {
+            console.error('Menù non trovato per:', menuKey);
+            return;
+        }
+        
+        // Seleziona 3 antipasti casuali
+        this.renderDishes('appetizer-dishes', this.getRandomDishes(menu.Antipasto, 3), 'Antipasto');
+        
+        // Seleziona 3 primi casuali
+        this.renderDishes('first-course-dishes', this.getRandomDishes(menu.Primo, 3), 'Primo');
+        
+        // Seleziona 1 secondo per ogni categoria
+        if (menu.Secondi && menu.Secondi.Carne) {
+            this.renderDishes('meat-dishes', this.getRandomDishes(menu.Secondi.Carne, 1), 'Carne');
+        }
+        
+        if (menu.Secondi && menu.Secondi.Pesce) {
+            this.renderDishes('fish-dishes', this.getRandomDishes(menu.Secondi.Pesce, 1), 'Pesce');
+        }
+        
+        if (menu.Secondi && menu.Secondi.Vegano) {
+            this.renderDishes('vegan-dishes', this.getRandomDishes(menu.Secondi.Vegano, 1), 'Vegano');
+        }
+        
+        // Seleziona 3 dolci casuali
+        this.renderDishes('dessert-dishes', this.getRandomDishes(menu.Dolce, 3), 'Dolce');
+    }
+    
+    getRandomDishes(dishesArray, count) {
+        if (!dishesArray || !Array.isArray(dishesArray) || dishesArray.length === 0) {
+            return [];
+        }
+        
+        // Se ci sono meno piatti del richiesto, restituisci tutti
+        if (dishesArray.length <= count) {
+            return [...dishesArray];
+        }
+        
+        // Seleziona piatti casuali senza ripetizioni usando l'algoritmo Fisher-Yates
+        const shuffled = [...dishesArray];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        
+        return shuffled.slice(0, count);
+    }
+    
+    renderDishes(containerId, dishes, category) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        
+        container.innerHTML = '';
+        
+        if (!dishes || dishes.length === 0) {
+            const noDishMsg = document.createElement('div');
+            noDishMsg.className = 'no-dish-msg';
+            noDishMsg.textContent = this.currentLang === 'it' ? 'Nessun piatto disponibile' : 
+                                  this.currentLang === 'en' ? 'No dishes available' :
+                                  this.currentLang === 'de' ? 'Keine Gerichte verfügbar' :
+                                  'No hay platos disponibles';
+            container.appendChild(noDishMsg);
+            return;
+        }
+        
+        dishes.forEach(dish => {
+            const dishCard = this.createDishCard(dish, category);
+            container.appendChild(dishCard);
+        });
+    }
+    
+    createDishCard(dish, category) {
+        const card = document.createElement('div');
+        card.className = 'dish-card';
+        
+        const categoryMap = {
+            'Antipasto': '🥗',
+            'Primo': '🍝',
+            'Carne': '🥩',
+            'Pesce': '🐟',
+            'Vegano': '🥦',
+            'Dolce': '🍰'
+        };
+        
+        const categoryIcon = categoryMap[category] || '🍽️';
+        
+        // Formatta il prezzo con 2 decimali
+        const formattedPrice = typeof dish.prezzo === 'number' 
+            ? dish.prezzo.toFixed(2) 
+            : parseFloat(dish.prezzo).toFixed(2);
+        
+        card.innerHTML = `
+            <div class="dish-name">
+                <span>${categoryIcon} ${dish.nome}</span>
+                <span class="dish-price">€${formattedPrice}</span>
+            </div>
+            <p class="dish-description">${dish.descrizione}</p>
+            <span class="dish-category">${category}</span>
+        `;
+        
+        return card;
+    }
+    
+    setLanguage(lang) {
+        this.currentLang = lang;
+        
+        // Aggiorna tutte le traduzioni
+        this.updateAllTranslations();
+        
+        // Aggiorna il selettore lingua
+        this.updateLanguageSelector(lang);
+        
+        // Rigenera il menù se già caricato
+        if (this.menuData) {
+            if (this.isRestaurantOpen) {
+                this.generateMenu();
+            } else {
+                this.showClosedMessage();
+            }
+        }
+    }
+    
+    updateAllTranslations() {
+        const langData = this.translations[this.currentLang];
+        
+        if (!langData) {
+            console.error('Traduzioni non trovate per la lingua:', this.currentLang);
+            return;
+        }
+        
+        // Aggiorna tutti gli elementi con ID specificato
+        Object.keys(langData).forEach(key => {
+            const element = document.getElementById(key);
+            if (element) {
+                element.textContent = langData[key];
+            }
+        });
+        
+        // Aggiorna il selettore lingua nel menu principale
+        const langSelect = document.getElementById('language-select');
+        if (langSelect) {
+            langSelect.value = this.currentLang;
+        }
+    }
+    
+    updateLanguageSelector(selectedLang) {
+        // Aggiorna i pulsanti nella schermata di benvenuto
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.classList.remove('active');
+            if (btn.dataset.lang === selectedLang) {
+                btn.classList.add('active');
+            }
+        });
+    }
+    
+    initLanguageSelector() {
+        // Schermata di benvenuto
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.dataset.lang;
+                this.setLanguage(lang);
+            });
+        });
+        
+        // Menu principale
+        const langSelect = document.getElementById('language-select');
+        if (langSelect) {
+            langSelect.addEventListener('change', (e) => {
+                this.setLanguage(e.target.value);
+            });
+        }
+    }
+    
+    setupEventListeners() {
+        // Pulsante "Entra"
+        const enterBtn = document.getElementById('enter-btn');
+        if (enterBtn) {
+            enterBtn.addEventListener('click', () => {
+                this.enterRestaurant();
+            });
+        }
+        
+        // Pulsante "Simula Cambio Orario"
+        const refreshBtn = document.getElementById('refresh-btn');
+        if (refreshBtn) {
+            refreshBtn.addEventListener('click', () => {
+                this.simulateTimeChange();
+            });
+        }
+        
+        // Tasto Enter per entrare
+        document.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !document.querySelector('.main-content').classList.contains('hidden')) {
+                this.enterRestaurant();
+            }
+        });
+    }
+    
+    enterRestaurant() {
+        // Mostra schermata di caricamento
+        this.showLoading();
+        
+        // Nascondi la schermata di benvenuto
+        document.querySelector('.language-selector').classList.add('hidden');
+        
+        // Mostra il contenuto principale dopo un breve ritardo
+        setTimeout(() => {
+            document.querySelector('.main-content').classList.remove('hidden');
+            
+            // Carica i dati del menù
+            this.loadMenuData();
+            
+            // Inizia l'aggiornamento dell'orario
+            this.startTimeUpdate();
+        }, 500);
+    }
+    
+    showWelcomeScreen() {
+        // Assicurati che la schermata di benvenuto sia visibile
+        document.querySelector('.language-selector').classList.remove('hidden');
+        document.querySelector('.main-content').classList.add('hidden');
+    }
+    
+    startTimeUpdate() {
+        // Aggiorna l'orario ogni secondo
+        setInterval(() => {
+            this.currentTime = new Date();
+            this.updateTimeDisplay();
+            
+            // Controlla se è cambiata la fascia oraria
+            this.checkMenuChange();
+        }, 1000);
+        
+        // Aggiorna subito l'orario
+        this.updateTimeDisplay();
+    }
+    
+    updateTimeDisplay() {
+        const timeElement = document.getElementById('current-time');
+        if (timeElement) {
+            const hours = this.currentTime.getHours().toString().padStart(2, '0');
+            const minutes = this.currentTime.getMinutes().toString().padStart(2, '0');
+            const seconds = this.currentTime.getSeconds().toString().padStart(2, '0');
+            
+            timeElement.textContent = `${hours}:${minutes}:${seconds}`;
+        }
+    }
+    
+    startTimeChecking() {
+        // Controlla l'orario ogni minuto per vedere se cambia la fascia oraria
+        this.timeCheckInterval = setInterval(() => {
+            this.checkMenuChange();
+        }, 60000); // Ogni minuto
+    }
+    
+    checkMenuChange() {
+        const previousMenuType = this.currentMenuType;
+        const
