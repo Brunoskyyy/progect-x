@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MSC Patrizia Room Service</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Login (VISIBILE SOLO ALL'INIZIO) -->
+    <section id="login-view" class="view active">
+        <div class="login-container">
+            <div class="login-header">
+                <div class="hotel-logo">
+                    <h1>MSC Patrizia</h1>
+                </div>
+                <h2>Room Service</h2>
+            </div>
+            
+            <div class="login-card">
+                <div class="input-group">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button class="btn-login" onclick="handleLogin()">
+                    <span>Accedi</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+                <p class="demo-hint">Demo: inserisci qualsiasi email e password</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Selezione Lingua (VISIBILE SOLO DOPO LOGIN) -->
+    <section id="lang-view" class="view">
+        <div class="lang-container">
+            <div class="lang-header">
+                <h2>Seleziona Lingua</h2>
+                <p>Scegli la tua lingua preferita</p>
+            </div>
+            
+            <div class="flags-grid">
+                <div class="flag-card" onclick="setLanguage('it')">
+                    <div class="flag-icon">🇮🇹</div>
+                    <h3>Italiano</h3>
+                    <p>Italian</p>
+                </div>
+                <div class="flag-card" onclick="setLanguage('en')">
+                    <div class="flag-icon">🇬🇧</div>
+                    <h3>English</h3>
+                    <p>International</p>
+                </div>
+                <div class="flag-card" onclick="setLanguage('es')">
+                    <div class="flag-icon">🇪🇸</div>
+                    <h3>Español</h3>
+                    <p>Spanish</p>
+                </div>
+                <div class="flag-card" onclick="setLanguage('de')">
+                    <div class="flag-icon">🇩🇪</div>
+                    <h3>Deutsch</h3>
+                    <p>German</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Principale (VISIBILE SOLO DOPO LINGUA) -->
+    <section id="menu-view" class="view">
+        <header class="main-header">
+            <div class="header-left">
+                <div class="time-display">
+                    <i class="fas fa-clock"></i>
+                    <span id="current-time">--:--</span>
+                </div>
+                <div class="service-badge" id="service-status">
+                    <span id="status-text">Servizio</span>
+                </div>
+            </div>
+            
+            <div class="header-center">
+                <i class="fas fa-ship header-icon"></i>
+                <h1>MSC Patrizia</h1>
+            </div>
+            
+            <div class="header-right">
+                <button class="lang-switcher" onclick="showLanguageSelection()">
+                    <i class="fas fa-globe"></i>
+                    <span id="current-lang">IT</span>
+                </button>
+                <button class="cart-btn" onclick="goToCheckout()" id="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="cart-count">0</span>
+                </button>
+            </div>
+        </header>
+        
+        <div class="menu-layout">
+            <!-- Sidebar per navigare tra le SEZIONI SEPARATE -->
+            <nav class="menu-sidebar" id="menu-sidebar">
+                <div class="sidebar-item active" onclick="showCategory('antipasti')" id="sidebar-antipasti">
+                    <i class="fas fa-apple-alt"></i>
+                    <span>Antipasti</span>
+                </div>
+                <div class="sidebar-item" onclick="showCategory('primi')" id="sidebar-primi">
+                    <i class="fas fa-utensils"></i>
+                    <span>Primi Piatti</span>
+                </div>
+                <div class="sidebar-item" onclick="showCategory('secondi')" id="sidebar-secondi">
+                    <i class="fas fa-drumstick-bite"></i>
+                    <span>Secondi Piatti</span>
+                </div>
+                <div class="sidebar-item" onclick="showCategory('dessert')" id="sidebar-dessert">
+                    <i class="fas fa-ice-cream"></i>
+                    <span>Dessert</span>
+                </div>
+                <div class="sidebar-item" onclick="showCategory('fissi')" id="sidebar-fissi">
+                    <i class="fas fa-star"></i>
+                    <span>I Classici</span>
+                </div>
+                <div class="sidebar-item" onclick="showCategory('bibite')" id="sidebar-bibite">
+                    <i class="fas fa-glass-cheers"></i>
+                    <span>Bevande & Bar</span>
+                </div>
+            </nav>
+            
+            <!-- Contenuto principale - OGNI CATEGORIA È UNA VISTA SEPARATA -->
+            <main class="menu-content">
+                <!-- ANTIPASTI (3 PIATTI) -->
+                <div id="category-antipasti" class="category-view active">
+                    <h2 class="category-title">Antipasti</h2>
+                    <div class="menu-grid" id="menu-antipasti">
+                        <!-- 3 antipasti generati dinamicamente -->
+                    </div>
+                </div>
+                
+                <!-- PRIMI PIATTI (3 PIATTI) -->
+                <div id="category-primi" class="category-view">
+                    <h2 class="category-title">Primi Piatti</h2>
+                    <div class="menu-grid" id="menu-primi">
+                        <!-- 3 primi generati dinamicamente -->
+                    </div>
+                </div>
+                
+                <!-- SECONDI PIATTI (3 PIATTI: CARNE, PESCE, VEGAN) -->
+                <div id="category-secondi" class="category-view">
+                    <h2 class="category-title">Secondi Piatti</h2>
+                    <div class="secondi-grid">
+                        <div class="secondi-category">
+                            <h3><i class="fas fa-drumstick-bite"></i> Carne</h3>
+                            <div class="menu-grid" id="menu-secondi-carne">
+                                <!-- 1 secondo di carne -->
+                            </div>
+                        </div>
+                        <div class="secondi-category">
+                            <h3><i class="fas fa-fish"></i> Pesce</h3>
+                            <div class="menu-grid" id="menu-secondi-pesce">
+                                <!-- 1 secondo di pesce -->
+                            </div>
+                        </div>
+                        <div class="secondi-category">
+                            <h3><i class="fas fa-leaf"></i> Vegan</h3>
+                            <div class="menu-grid" id="menu-secondi-vegan">
+                                <!-- 1 secondo vegan -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- DESSERT (3 PIATTI) -->
+                <div id="category-dessert" class="category-view">
+                    <h2 class="category-title">Dessert</h2>
+                    <div class="menu-grid" id="menu-dessert">
+                        <!-- 3 dessert generati dinamicamente -->
+                    </div>
+                </div>
+                
+                <!-- CLASSICI -->
+                <div id="category-fissi" class="category-view">
+                    <h2 class="category-title">I Classici</h2>
+                    <div class="menu-grid" id="menu-fissi">
+                        <!-- Classici generati dinamicamente -->
+                    </div>
+                </div>
+                
+                <!-- BEVANDE -->
+                <div id="category-bibite" class="category-view">
+                    <h2 class="category-title">Bevande & Bar</h2>
+                    <div class="menu-grid" id="menu-bibite">
+                        <!-- Bevande generate dinamicamente -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </section>
+
+    <!-- Checkout (VISIBILE SOLO DAL CARRELLO) -->
+    <section id="checkout-view" class="view">
+        <div class="checkout-container">
+            <div class="checkout-header">
+                <button class="back-btn" onclick="backToMenu()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h2 id="checkout-title">Riepilogo Ordine</h2>
+                <div class="cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+            </div>
+            
+            <div class="order-summary" id="order-summary">
+                <!-- Ordine generato dinamicamente -->
+            </div>
+            
+            <div class="room-section">
+                <div class="input-group">
+                    <i class="fas fa-door-closed input-icon"></i>
+                    <input type="number" id="room-number" placeholder="Numero Camera (1-999)" min="1" max="999">
+                    <div class="input-hint">Inserisci il numero della tua camera</div>
+                </div>
+            </div>
+            
+            <div class="checkout-actions">
+                <button class="btn-secondary" onclick="backToMenu()" id="btn-back">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Indietro</span>
+                </button>
+                <button class="btn-primary" onclick="confirmOrder()" id="btn-confirm">
+                    <span>Conferma Ordine</span>
+                    <i class="fas fa-check"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Servizio Chiuso (VISIBILE SOLO SE ORARIO 02:00-05:30) -->
+    <section id="closed-view" class="view">
+        <div class="closed-container">
+            <div class="closed-icon">
+                <i class="fas fa-moon"></i>
+            </div>
+            <h2>Servizio Sospeso</h2>
+            <p class="closed-message">
+                Il servizio in camera è temporaneamente chiuso.<br>
+                Orario: 02:00 - 05:30
+            </p>
+            <div class="next-service">
+                <i class="fas fa-clock"></i>
+                <span>Riapertura alle <strong>05:30</strong></span>
+            </div>
+            <button class="btn-retry" onclick="checkServiceStatus()">
+                <i class="fas fa-redo"></i>
+                Controlla disponibilità
+            </button>
+        </div>
+    </section>
+
+    <!-- Conferma Ordine (VISIBILE SOLO DOPO CHECKOUT) -->
+    <section id="success-view" class="view">
+        <div class="success-container">
+            <div class="success-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2>Ordine Confermato!</h2>
+            <p class="success-message">
+                Il tuo ordine è stato ricevuto e verrà consegnato in camera al più presto.
+            </p>
+            
+            <div class="order-details">
+                <div class="detail-item">
+                    <i class="fas fa-door-closed"></i>
+                    <span>Camera: <strong id="confirmed-room">--</strong></span>
+                </div>
+                <div class="detail-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Tempo stimato: <strong>20-30 minuti</strong></span>
+                </div>
+            </div>
+            
+            <button class="btn-success" onclick="backToMainMenu()">
+                <i class="fas fa-utensils"></i>
+                Torna al Menu
+            </button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
